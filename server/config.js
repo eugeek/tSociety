@@ -6,7 +6,7 @@ const config = {
         host: 'localhost',
         user: 'postgres',
         pass: '',
-        base: ''
+        base: 'myapp'
     }
 };
 module.exports = config;
