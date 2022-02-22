@@ -1,12 +1,13 @@
 import {MapContainer, TileLayer, useMapEvents} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({ onClick}) => {
+const Map = ({ onClick, getCoords }) => {
 
     function MyClickOnMap() {
         useMapEvents({
             click: (e) => {
                 const {lat,lng} = e.latlng;
+                getCoords([lat, lng]);
                 onClick();
             }
         })
