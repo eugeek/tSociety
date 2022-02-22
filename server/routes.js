@@ -12,4 +12,8 @@ router.get('/data', (req, res) => {
     });
 })
 
+router.post('/api/createtoilet', (req, res) => {
+    console.log(req.body);
+});
+
 module.exports = router;

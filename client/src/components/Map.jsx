@@ -1,9 +1,20 @@
-import { MapContainer, TileLayer} from 'react-leaflet';
+import {MapContainer, TileLayer, useMapEvents} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({ onClick }) => {
+const Map = ({ onClick}) => {
+
+    function MyClickOnMap() {
+        useMapEvents({
+            click: (e) => {
+                const {lat,lng} = e.latlng;
+                onClick();
+            }
+        })
+        return null;
+    }
+
     return (
-        <div onClick={onClick}>
+        <div>
             <MapContainer
                 center={[59.939, 30.319]}
                 zoom={13}
@@ -13,6 +24,7 @@ const Map = ({ onClick }) => {
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                <MyClickOnMap />
             </MapContainer>
         </div>
     );

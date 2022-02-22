@@ -12,22 +12,9 @@ function NotRendererApp () {
 }
 
 function App() {
-    async function onClickButton () {
-        const requestOptions = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            }
-        }
-        const res = await fetch('http://localhost:3080/data', requestOptions);
-        const data = await res.json();
-        alert(JSON.stringify(data));
-    }
     return (
         <>
             <NotRendererApp />
-            <button onClick={onClickButton}>CLICK CLACK</button>
         </>
     );
 }
