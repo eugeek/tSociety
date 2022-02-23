@@ -1,10 +1,11 @@
 import {useRef, useState} from "react";
 import CreateForm from "./components/CreateForm";
+import InfoToilet from "./components/InfoToilet";
 import Map from "./components/Map";
 import './App.css';
 
 function NotRendererApp () {
-    const functionRef = useRef();
+    const createRef = useRef();
     const [coords, setCoords] = useState();
 
     const handleCoordsChange = (obj) => {
@@ -12,8 +13,12 @@ function NotRendererApp () {
     };
 
     return <div>
-        <Map onClick={() => functionRef?.current(true)} getCoords={handleCoordsChange} />
-        <CreateForm functionRef={functionRef} coords={coords} />
+        <Map
+            onClickMap={() => createRef?.current(true)}
+            getCoords={handleCoordsChange}
+        />
+        <CreateForm createRef={createRef} coords={coords} />
+        <InfoToilet />
     </div>;
 }
 

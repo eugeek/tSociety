@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function CreateForm ({functionRef, coords}) {
+function CreateForm ({createRef, coords}) {
     const [visible, setVisible] = useState(false);
+    const [description, setDescription] = useState('');
     const [cabs, setCabs] = useState(1);
     const [paperChecked, setPaperChecked] = useState(false)
 
     useEffect(() => {
-        functionRef.current = setVisible
-    }, [functionRef]);
+        createRef.current = setVisible
+    }, [createRef]);
 
     if (!visible) return null;
 
@@ -16,19 +17,22 @@ function CreateForm ({functionRef, coords}) {
         setPaperChecked(!paperChecked);
     };
 
-    function handleSubmit (e) {
+    async function handleSubmit (e) {
         e.preventDefault();
 
         const data = {
             latlng: {
                 lat: coords[0],
-                lng: coords[1],
+                lng: coords[1]
             },
-            cabs: cabs,
-            hasPaper: paperChecked,
+            description: description,
+            props: {
+                cabs: cabs,
+                paper: paperChecked
+            }
         };
 
-        axios
+        await axios
             .post('http://localhost:3080/api/createtoilet', data)
             .then( res => console.log(res));
 
@@ -38,12 +42,16 @@ function CreateForm ({functionRef, coords}) {
         <form onSubmit={handleSubmit}>
             <h1>Добавить новый туалет</h1>
             <div>
-                <label htmlFor='email'>Количество кабинок > </label>
+                <label htmlFor='desc'>Описание > </label>
+                <input type='text' id='desc' value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            <div>
+                <label htmlFor='cabs'>Количество кабинок > </label>
                 <input type='text' id='cabs' value={cabs} onChange={(e) => setCabs(e.target.value)} />
             </div>
             <div>
-                <label htmlFor='email'>Туалетная бумага > </label>
-                <input type="checkbox" checked={paperChecked} onChange={checkPaper} />
+                <label htmlFor='paper'>Туалетная бумага > </label>
+                <input type='checkbox' id='paper' checked={paperChecked} onChange={checkPaper} />
             </div>
             <button type={"submit"}>Добавить</button>
         </form>
