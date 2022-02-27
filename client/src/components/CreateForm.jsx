@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function CreateForm ({createRef, coords}) {
+function CreateForm ({showCreateForm, coords}) {
     const [visible, setVisible] = useState(false);
     const [description, setDescription] = useState('');
     const [cabs, setCabs] = useState(1);
     const [paperChecked, setPaperChecked] = useState(false)
 
     useEffect(() => {
-        createRef.current = setVisible
-    }, [createRef]);
+        setVisible(showCreateForm);
+    }, [showCreateForm]);
 
     if (!visible) return null;
 

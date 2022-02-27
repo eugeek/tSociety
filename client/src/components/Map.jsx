@@ -82,7 +82,7 @@ function LocationMarkers() {
     );
 }
 
-const Map = ({ onClickMap, getCoords }) => {
+const Map = ({ showCreateForm, getCoords }) => {
 
     const [cursor, setCursor] = useState(null);
 
@@ -92,7 +92,7 @@ const Map = ({ onClickMap, getCoords }) => {
                 const {lat,lng} = e.latlng;
                 getCoords([lat, lng]);
                 setCursor(e.latlng);
-                onClickMap();
+                showCreateForm(true);
             }
         })
         return null;
@@ -113,7 +113,14 @@ const Map = ({ onClickMap, getCoords }) => {
                 />
                 <MyClickOnMap />
                 { cursor &&
-                    <Popup position={cursor}>
+                    <Popup
+                        position={cursor}
+                        onClose={() => {
+                            setCursor(null);
+                            showCreateForm(false);
+                        }
+                        }
+                    >
                         Добавим здесь?
                     </Popup>
                 }

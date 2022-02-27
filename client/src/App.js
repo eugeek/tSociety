@@ -5,7 +5,7 @@ import Map from "./components/Map";
 import './App.css';
 
 function NotRendererApp () {
-    const createRef = useRef();
+    const [addToilet, setAddToilet] = useState(false);
     const [coords, setCoords] = useState();
 
     const handleCoordsChange = (obj) => {
@@ -14,10 +14,10 @@ function NotRendererApp () {
 
     return <div>
         <Map
-            onClickMap={() => createRef?.current(true)}
+            showCreateForm={(e) => setAddToilet(e)}
             getCoords={handleCoordsChange}
         />
-        <CreateForm createRef={createRef} coords={coords} />
+        <CreateForm showCreateForm={addToilet} coords={coords} />
         <InfoToilet />
     </div>;
 }
