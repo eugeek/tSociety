@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Button, Form} from "react-bootstrap";
+
 function CreateForm ({showCreateForm, coords}) {
     const [visible, setVisible] = useState(false);
     const [description, setDescription] = useState('');
@@ -39,22 +42,28 @@ function CreateForm ({showCreateForm, coords}) {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Добавить новый туалет</h1>
-            <div>
-                <label htmlFor='desc'>Описание > </label>
-                <input type='text' id='desc' value={description} onChange={(e) => setDescription(e.target.value)} />
-            </div>
-            <div>
-                <label htmlFor='cabs'>Количество кабинок > </label>
-                <input type='text' id='cabs' value={cabs} onChange={(e) => setCabs(e.target.value)} />
-            </div>
-            <div>
-                <label htmlFor='paper'>Туалетная бумага > </label>
-                <input type='checkbox' id='paper' checked={paperChecked} onChange={checkPaper} />
-            </div>
-            <button type={"submit"}>Добавить</button>
-        </form>
+        <div className="container sigcont center-block">
+            <Form onSubmit={handleSubmit}>
+                <h1>Создание туалета</h1>
+                <Form.Text className="text-muted">
+                    Посмотрите на карту и убедитесь в правильности установки метки
+                </Form.Text>
+                <Form.Group controlId="form.Desc">
+                    <Form.Label>Описание:</Form.Label>
+                    <Form.Control type="text" placeholder="Опишите здесь данное место" value={description} onChange={(e) => setDescription(e.target.value)} />
+                </Form.Group>
+                <Form.Group controlId="form.Cabs">
+                    <Form.Label>Количество кабинок:</Form.Label>
+                    <Form.Control type="text" placeholder="Укажите количество кабинок здесь" value={cabs} onChange={(e) => setCabs(e.target.value)} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" label="- есть ли туалетная бумага" checked={paperChecked} onChange={checkPaper} />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Добавить
+                </Button>
+            </Form>
+        </div>
     );
 }
 
