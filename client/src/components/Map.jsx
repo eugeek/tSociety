@@ -7,6 +7,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import toilet from './images/toilet.png';
 import arrow from './images/arrow.png';
+import {Card, ListGroup, ListGroupItem} from "react-bootstrap";
 
 const toiletIcon = L.icon({
     iconUrl: toilet,
@@ -69,12 +70,17 @@ function LocationMarkers() {
                     }}
                 >
                     <Popup>
-                        <p>Туалет №{marker.id}</p>
-                        <hr />
-                        <p>{marker.description}</p>
-                        <hr />
-                        <p>Количество кабинок: {marker.props.cabs}</p>
-                        <p>Туалетная бумага: {marker.props.paper === true ? 'Есть' : 'Нет'}</p>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Body>
+                                <Card.Title className="text-center fs-4" >Туалет №{marker.id}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted fs-6">{marker.description}</Card.Subtitle>
+                                <ListGroup className="list-group-flush text-center fs-6">
+                                    <ListGroupItem>Количество кабинок: {marker.props.cabs}</ListGroupItem>
+                                    <ListGroupItem>Туалетная бумага: {marker.props.paper === true ? 'Есть' : 'Нет'}</ListGroupItem>
+                                </ListGroup>
+                                <Card.Link href="/" className="fs-6">Подробнее</Card.Link>
+                            </Card.Body>
+                        </Card>
                     </Popup>
                 </Marker>)
             }
@@ -121,8 +127,9 @@ const Map = ({ showCreateForm, getCoords }) => {
                         }
                         }
                     >
-                        Добавим здесь?
+                        <span>Добавим здесь?</span>
                     </Popup>
+
                 }
                 <FindMe />
                 <MarkerClusterGroup showCoverageOnHover={false}>
