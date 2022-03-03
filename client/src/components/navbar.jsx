@@ -10,11 +10,11 @@ function NavBar () {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/">Где я?</Nav.Link>
+                        <Link className={"link-styles"} to="/">Найти меня!</Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link><Link className={"link-styles"} to="/login">Войти</Link></Nav.Link>
-                        <Nav.Link><Link className={"link-styles"} to="/signup">Зарегистрироваться</Link></Nav.Link>
+                        <Link className={"link-styles"} to="/login">Войти</Link>
+                        <Link className={"link-styles"} to="/signup">Зарегистрироваться</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

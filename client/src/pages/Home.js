@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 import CreateForm from "../components/CreateForm";
 import Map from "../components/Map";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +21,7 @@ function Home() {
             <CreateForm showCreateForm={addToilet} coords={coords} />
         </div>;
     }
+
     return (
         <>
             <NavBar />
