@@ -1,3 +1,4 @@
+import './Map.css';
 import {MapContainer, Marker, Popup, TileLayer, Tooltip, useMap, useMapEvents} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, {useEffect, useState} from "react";
@@ -7,7 +8,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import "react-leaflet-markercluster/dist/styles.min.css";
 import toilet from './images/toilet.png';
 import arrow from './images/arrow.png';
-import {Card, ListGroup, ListGroupItem} from "react-bootstrap";
+import {Button, Card, Form, ListGroup, ListGroupItem} from "react-bootstrap";
 
 const toiletIcon = L.icon({
     iconUrl: toilet,
@@ -104,13 +105,43 @@ const Map = ({ showCreateForm, getCoords }) => {
         return null;
     }
 
+    const [description, setDescription] = useState('');
+    const [cabs, setCabs] = useState(1);
+    const [paperChecked, setPaperChecked] = useState(false)
+
+
+    const checkPaper = () => {
+        setPaperChecked(!paperChecked);
+    };
+
+    async function handleSubmit (e) {
+        e.preventDefault();
+
+        const data = {
+            latlng: {
+                lat: cursor.lat,
+                lng: cursor.lng
+            },
+            description: description,
+            props: {
+                cabs: cabs,
+                paper: paperChecked
+            }
+        };
+
+        await axios
+            .post('http://localhost:3080/api/createtoilet', data)
+            .then( res => console.log(res));
+
+    }
+
     return (
-        <div>
+        <div style={{height: window.innerHeight - 60, width: '100%', padding: 0, margin: 0}}>
             <MapContainer
                 center={[59.939, 30.319]}
                 scrollWheelZoom={true}
-                style={{height: 500, width: "100%"}}
                 doubleClickZoom={false}
+                style={{height: '100%'}}
                 zoom={13}
                 maxZoom={18}
             >
@@ -127,7 +158,28 @@ const Map = ({ showCreateForm, getCoords }) => {
                         }
                         }
                     >
-                        <span>Добавим здесь?</span>
+                        <div className="container sigcont center-block">
+                            <Form onSubmit={handleSubmit}>
+                                <h1>Создание туалета</h1>
+                                <Form.Text className="text-muted">
+                                    Посмотрите на карту и убедитесь в правильности установки метки
+                                </Form.Text>
+                                <Form.Group controlId="form.Desc">
+                                    <Form.Label>Описание:</Form.Label>
+                                    <Form.Control type="text" placeholder="Опишите здесь данное место" value={description} onChange={(e) => setDescription(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group controlId="form.Cabs">
+                                    <Form.Label>Количество кабинок:</Form.Label>
+                                    <Form.Control type="text" placeholder="Укажите количество кабинок здесь" value={cabs} onChange={(e) => setCabs(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                    <Form.Check type="checkbox" label="- есть ли туалетная бумага" checked={paperChecked} onChange={checkPaper} />
+                                </Form.Group>
+                                <Button variant="primary" type="submit">
+                                    Добавить
+                                </Button>
+                            </Form>
+                        </div>
                     </Popup>
 
                 }
